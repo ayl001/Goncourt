@@ -1,4 +1,3 @@
-import actions
 from DAO.concours_dao import selection_dao
 
 class peone:
@@ -50,21 +49,24 @@ class peone:
                     print("Au revoir")
                     on_joue = False
 
-    class juror(actions.peone):
-        def vote(self):
-            toto = input('Id du livre pour lequel vous voulez voter')
-            titi = input('Sur quelle sélection vous voulez voter')
-            titi = titi - 1
-            ''' Récupérer l'id de la sélection correspondant 
-            au livre dans la sélection N-1, où prend place le vote, soit ids
-            SELECT id FROM selection WHERE stage = {titi} AND book_id = {toto}'''
-            ids = 42 # fake
-            obj = selection_dao.read(ids)
-            obj.vote += 1
-            if selection_dao.update(obj):
-                print('a voté')
+class juror(peone):
+    def vote(self):
+        toto = input('Id du livre pour lequel vous voulez voter')
+        toto = int(toto)
+        titi = input('Sur quelle sélection vous voulez voter')
+        titi = int(titi)
+        titi = titi - 1
+        ''' Récupérer l'id de la sélection correspondant 
+        au livre dans la sélection N-1, où prend place le vote, soit ids
+        SELECT id FROM selection WHERE stage = {titi} AND book_id = {toto}'''
+        ids = 42 # fake
+        obj = selection_dao.read(ids)
+        obj.vote += 1
+        if selection_dao.update(obj):
+            print('a voté')
 
- class president(actions.juror):
+
+class president(juror):
      pass
 
 

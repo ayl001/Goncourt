@@ -4,7 +4,7 @@ from DAO.dao import Dao
 from concours import selection
 
 
-class selection_dao(selection):
+class selection_dao(Dao):
     def create(self, obj: selection) -> int:
         """Crée l'entité en BD correspondant à l'objet obj
 
@@ -51,7 +51,7 @@ class selection_dao(selection):
         SET
         stage = %d, book_id = %d, vote = %d
         WHERE
-        id = %d''' (obj.stage, obj.book_id, obj.vote, obj.selection_id,)
+        id = %d''' % (obj.stage, obj.book_id, obj.vote, obj.selection_id,)
         with self.__class__.connection.cursor() as cursor:
             effet = cursor.execute(query)
             if effet == None:
